@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:latest
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vdm
+      MYSQL_PORT: 3306
+      MYSQL_USER: vdm
+      MYSQL_PASSWORD: vdm
+    ports:
+      - 3308:3306
+    restart: always
+    networks:
+      - devnetwork
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_USER=vdm
+      - MYSQL_PASSWORD=vdm
+      - MYSQL_DB=vdm
+    networks:
+      - devnetwork
+    depends_on:
+      - db
+    # command: ["./wait-for-it.sh db:3306 --strict --timeout=300"]
+    command: bash -c "/app/wait-for-it.sh --timeout=60 db:3306 && npm run start"
+    # command: ["./wait-for-it.sh", "db:3306", "--timeout=60", "--run npm start"]
+networks:
+  devnetwork:
+volumes:
+  db_data:

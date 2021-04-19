@@ -1,0 +1,786 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"Employee": {
+				"properties": {
+					"serial_number": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"surname": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string",
+						"format": "email"
+					},
+					"role": {
+						"type": "string"
+					},
+					"hiring_date": {
+						"type": "string",
+						"format": "date"
+					},
+					"dismissal_date": {
+						"type": "string",
+						"format": "date"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date"
+					}
+				},
+				"required": [],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EmployeeDto": {
+				"properties": {
+					"serial_number": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"surname": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"hiring_date": {
+						"type": "string",
+						"format": "date"
+					},
+					"dismissal_date": {
+						"type": "string",
+						"format": "date"
+					}
+				},
+				"required": [
+					"serial_number",
+					"name",
+					"surname",
+					"email",
+					"role",
+					"hiring_date"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateEmployeeDto": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"surname": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"hiring_date": {
+						"type": "string",
+						"format": "date"
+					},
+					"dismissal_date": {
+						"type": "string",
+						"format": "date"
+					}
+				},
+				"required": [],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Task": {
+				"properties": {
+					"id": {
+						"type": "number"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"progress": {
+						"type": "string",
+						"enum": ["new", "in progress", "done"]
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date"
+					}
+				},
+				"required": [],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TaskDto": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"progress": {
+						"type": "string",
+						"enum": ["new", "in progress", "done"]
+					},
+					"employee": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"title",
+					"description",
+					"progress"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Error": {
+				"properties": {
+					"error": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"error"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Empty": {
+				"properties": {
+				},
+				"required": [],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "Vidiemme Project Management App",
+		"version": "0.0.1",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/employee": {
+			"get": {
+				"operationId": "GetEmployees",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Employee"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"description": "pagination limit",
+						"required": false,
+						"schema": {
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "offset",
+						"description": "pagination offset",
+						"required": false,
+						"schema": {
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateEmployee",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Employee"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EmployeeDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/employee/{id}": {
+			"get": {
+				"operationId": "GetEmployee",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Employee"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"description": "employee serial number",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateEmployee",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Employee"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"description": "employee serial number",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateEmployeeDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteEmployee",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Empty"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"description": "employee serial number",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/employee/{id}/tasks": {
+			"get": {
+				"operationId": "GetEmployeeTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Task"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Employee"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"description": "employee serial number",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"description": "pagination limit",
+						"required": false,
+						"schema": {
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "offset",
+						"description": "pagination offset",
+						"required": false,
+						"schema": {
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/task": {
+			"get": {
+				"operationId": "GetTasks",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Task"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Task"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"description": "pagination limit",
+						"required": false,
+						"schema": {
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "offset",
+						"description": "pagination offset",
+						"required": false,
+						"schema": {
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Task"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Task"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TaskDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/task/{id}": {
+			"get": {
+				"operationId": "GetTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Task"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Task"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"description": "task id",
+						"required": true,
+						"schema": {
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Task"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Task"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"description": "task id",
+						"required": true,
+						"schema": {
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TaskDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Empty"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Task"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"description": "task id",
+						"required": true,
+						"schema": {
+							"type": "number"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

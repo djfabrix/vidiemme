@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "target": "es2017",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "rootDir": "./",
+      "outDir": "./build",
+      "esModuleInterop": true
+    }
+  }

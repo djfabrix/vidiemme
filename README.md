@@ -41,6 +41,8 @@ npm run start
 ```
 
 ### Documentation 
+> After running the node server, documentation is available at the following url:
+>
 [Project documentation](http://localhost:3000)
 
 [OpenApi Swagger](http://localhost:3000/docs)
